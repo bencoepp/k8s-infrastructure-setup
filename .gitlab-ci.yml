@@ -1,7 +1,15 @@
-﻿stages:
+stages:
+  - test
   - deploy
+test-job:
+  stage: test
+  image: python:3.9
+  script:
+    - python -m pip install --upgrade pip
+    - pip install ansible
+    - ansible-galaxy install -r requirements.yml
 
-deploy-job:
+deploy:
   stage: deploy
   image: python:3.9
   environment: production
