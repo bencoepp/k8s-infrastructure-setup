@@ -1,0 +1,8 @@
+﻿---
+- name: "Setup ENV"
+  hosts: all
+  become: true
+  
+  tasks:
+    - name: Install Kubernetes
+      ansible.builtin.import_playbook: kubernetes_sigs.kubespray.cluster
