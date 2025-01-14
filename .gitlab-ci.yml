@@ -32,9 +32,8 @@ deploy:
     - pip install -r requirements.txt
     - ansible-galaxy install -r requirements.yml
   script:
-    - echo "$SSH_KEY" > ~/.ssh/bcp-cluster
-    - chmod 400 ~/.ssh/bcp-cluster
+    - echo "$SSH_KEY" > bcp-cluster
+    - chmod 400 bcp-cluster
     - echo "$HOSTS" > hosts.ini
     - export ANSIBLE_HOST_KEY_CHECKING=False
-    - ansible -m ping all -i hosts.ini --user root --private-key ~/.ssh/bcp-cluster
-    - ansible-playbook -i hosts.ini setup.yml --become --become-user=root --private-key ~/.ssh/bcp-cluster
+    - ansible-playbook -i hosts.ini setup.yml --become --become-user=root --private-key bcp-cluster
