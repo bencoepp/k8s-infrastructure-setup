@@ -13,10 +13,10 @@ test-reachable-job:
     - pip install -r requirements.txt
   script:
     - ansible --version
-    - echo "$SSH_KEY" > ~/bcp-cluster
-    - chmod 400 ~/bcp-cluster
+    - echo "$SSH_KEY" > bcp-cluster
+    - chmod 400 bcp-cluster
     - echo "$HOSTS" > hosts.ini
-    - ansible -m ping all -i hosts.ini --user root --private-key ~/bcp-cluster
+    - ansible -m ping all -i hosts.ini --user root --private-key bcp-cluster
 
 test-job:
   stage: test
