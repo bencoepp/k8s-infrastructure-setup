@@ -1,0 +1,23 @@
+﻿image: python:3.9
+
+stages:
+  - prepare
+  - deploy
+
+before_script:
+  - python -m pip install --upgrade pip
+  - pip install ansible
+
+prepare:
+  stage: prepare
+  script:
+    - ansible-galaxy install -r requirements.yml
+
+deploy:
+  stage: deploy
+  environment: production
+  script:
+    - echo "$SSH_KEY" > id_rsa
+    - chmod 600 id_rsa
+    - echo "$HOSTS" > hosts.yaml
+    - ansible-playbook -i hosts.yaml setup.yml --private-key=id_rsa
