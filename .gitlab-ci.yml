@@ -7,8 +7,8 @@ test-job:
   image: python:3.9
   script:
     - python -m pip install --upgrade pip
-    - pip install ansible
-    - pip install distlib
+    - pip install -r requirements.txt
+    - ansible -v
     - ansible-galaxy install -r requirements.yml
 
 deploy:
@@ -17,8 +17,7 @@ deploy:
   environment: production
   before_script:
     - python -m pip install --upgrade pip
-    - pip install ansible
-    - pip install distlib
+    - pip install -r requirements.txt
     - ansible-galaxy install -r requirements.yml
   script:
     - echo "$SSH_KEY" > id_rsa
