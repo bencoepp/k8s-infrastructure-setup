@@ -1,7 +1,7 @@
 ﻿stages:
   - deploy
 
-deploy:
+deploy-job:
   stage: deploy
   image: python:3.9
   environment: production
