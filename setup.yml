@@ -1,8 +1,10 @@
 ﻿---
-- name: "Setup ENV"
+- name: "Setup Kubernetes Cluster"
   hosts: all
   become: true
-  
+  gather_facts: true
+
   tasks:
-    - name: Setup Kubernetes
-      ansible.builtin.import_playbook: kubernetes_sigs.kubespray.cluster
+    - name: Include Kubespray Cluster Playbook
+      ansible.builtin.include_role:
+        name: kubernetes_sigs.kubespray.cluster
