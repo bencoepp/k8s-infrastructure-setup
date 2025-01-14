@@ -5,23 +5,28 @@ stages:
 test-job:
   stage: test
   image: python:3.9
-  script:
+  before_script:
     - python -m pip install --upgrade pip
+    - pip install ansible
     - pip install -r requirements.txt
-    - ansible --v
+  script:
+    - ansible --version
     - ansible-galaxy install -r requirements.yml
+    - echo "Tests completed successfully."
 
 deploy:
   stage: deploy
   image: python:3.9
-  environment: production
+  environment:
+    name: production
   before_script:
     - python -m pip install --upgrade pip
+    - pip install ansible
     - pip install -r requirements.txt
     - ansible-galaxy install -r requirements.yml
   script:
     - echo "$SSH_KEY" > id_rsa
     - chmod 600 id_rsa
     - echo "$HOSTS" > hosts.ini
-    - ansible -m ping -i hosts.ini --become-user=root --private-key=id_rsa
+    - ansible -m ping all -i hosts.ini --become-user=root --private-key=id_rsa
     - ansible-playbook -i hosts.ini setup.yml --become --become-user=root --private-key=id_rsa
