@@ -1,6 +1,7 @@
 stages:
   - test
   - deploy
+
 test-job:
   stage: test
   image: python:3.9
@@ -22,5 +23,7 @@ deploy:
   script:
     - echo "$SSH_KEY" > id_rsa
     - chmod 600 id_rsa
-    - echo "$HOSTS" > hosts.yaml
-    - ansible-playbook -i hosts.yaml setup.yml --private-key=id_rsa
+    - cat id_rsa
+    - echo "$HOSTS" > hosts.ini
+    - cat hosts.ini
+    #- ansible-playbook -i hosts.ini setup.yml --private-key=id_rsa
