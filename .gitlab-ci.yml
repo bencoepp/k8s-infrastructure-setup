@@ -16,6 +16,7 @@ test-reachable-job:
     - echo "$SSH_KEY" > bcp-cluster
     - chmod 400 bcp-cluster
     - echo "$HOSTS" > hosts.ini
+    - export ANSIBLE_HOST_KEY_CHECKING=False
     - ansible -m ping all -i hosts.ini --user root --private-key bcp-cluster
 
 test-job:
