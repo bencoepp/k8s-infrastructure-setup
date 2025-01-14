@@ -2,6 +2,22 @@ stages:
   - test
   - deploy
 
+test-reachable-job:
+  stage: test
+  image: python:3.10.16
+  before_script:
+    - python -m pip install --upgrade pip
+    - pip install ansible
+    - pip install "ansible-core>=2.16.4,<2.17.0"
+    - pip install distlib
+    - pip install -r requirements.txt
+  script:
+    - ansible --version
+    - echo "$SSH_KEY" > ~/.ssh/bcp-cluster
+    - chmod 400 ~/.ssh/bcp-cluster
+    - echo "$HOSTS" > hosts.ini
+    - ansible -m ping all -i hosts.ini --user root --private-key id_rsa
+
 test-job:
   stage: test
   image: python:3.10.16
