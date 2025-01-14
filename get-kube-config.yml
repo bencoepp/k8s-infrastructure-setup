@@ -1,0 +1,11 @@
+﻿---
+- name: Fetch Kube config from the first host in inventory
+  hosts: "{{ groups['all'][0] }}"
+  gather_facts: false
+
+  tasks:
+    - name: Fetch .kube/config
+      fetch:
+        src: /root/.kube/config
+        dest: /.kube/config
+        flat: yes
