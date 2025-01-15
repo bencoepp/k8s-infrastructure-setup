@@ -10,10 +10,10 @@ bin_dir: /usr/local/bin
 # access_ip: 1.1.1.1
 
 ## External LB example config
-apiserver_loadbalancer_domain_name: "bcp-cluster.bencoepp.de"
-loadbalancer_apiserver:
-  address: 49.12.16.161
-  port: 8443
+#apiserver_loadbalancer_domain_name: "bcp-cluster.bencoepp.de"
+#loadbalancer_apiserver:
+#  address: 49.12.16.161
+#  port: 8443
 
 ## Internal loadbalancers for apiservers
 # loadbalancer_apiserver_localhost: true
@@ -22,7 +22,7 @@ loadbalancer_apiserver:
 
 ## Local loadbalancer should use this port
 ## And must be set port 6443
-loadbalancer_apiserver_port: 8443
+loadbalancer_apiserver_port: 6443
 
 ## If loadbalancer_apiserver_healthcheck_port variable defined, enables proxy liveness check for nginx.
 loadbalancer_apiserver_healthcheck_port: 8081
