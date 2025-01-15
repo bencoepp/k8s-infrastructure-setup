@@ -3,3 +3,4 @@
 /id_rsa
 kube_config
 bcp-lb-user.kubeconfig
+/credentials/kubeadm_certificate_key.creds
