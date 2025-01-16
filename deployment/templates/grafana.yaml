@@ -6,13 +6,43 @@ metadata:
 spec:
   destination:
     namespace: monitoring
-    server: https://kubernetes.default.svc
-  project: default
+    server: 'https://kubernetes.default.svc'
   source:
     repoURL: 'https://grafana.github.io/helm-charts'
     targetRevision: 8.8.3
     chart: grafana
+    helm:
+      parameters:
+        - name: autoscaling.enabled
+          value: 'true'
+  project: default
   syncPolicy:
     automated: {}
     syncOptions:
       - CreateNamespace=true
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: grafana
+  namespace: monitoring
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+spec:
+  rules:
+    - host: grafana.bencoepp.de
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: grafana
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - grafana.bencoepp.de
+      secretName: grafana-tls
