@@ -2,6 +2,7 @@
 kind: Application
 metadata:
   name: tempo
+  namespace: argocd
 spec:
   destination:
     namespace: monitoring
