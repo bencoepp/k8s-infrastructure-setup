@@ -1,20 +1,25 @@
 ﻿apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
+  labels:
+    app.kubernetes.io/instance: bcp-infrastructure
   name: longhorn
   namespace: argocd
 spec:
   destination:
     namespace: longhorn
-    server: 'https://kubernetes.default.svc'
-  source:
-    repoURL: 'https://charts.longhorn.io'
-    targetRevision: 1.7.2
-    chart: longhorn
+    server: https://kubernetes.default.svc
   project: default
+  source:
+    chart: longhorn
+    helm:
+      parameters:
+        - name: preUpgradeChecker.jobEnabled
+          value: 'false'
+    repoURL: https://charts.longhorn.io
+    targetRevision: 1.7.2
   syncPolicy:
     automated:
-      prune: false
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
