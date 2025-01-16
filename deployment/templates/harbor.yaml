@@ -16,11 +16,12 @@ spec:
           value: 'registry.bencoepp.de'
         - name: expose.ingress.className
           value: 'nginx'
-        - name: expose.ingress.annotations
-          value: |
-            cert-manager.io/cluster-issuer: letsencrypt-prod
-            nginx.ingress.kubernetes.io/ssl-passthrough: "true"
-            nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+        - name: expose.ingress.annotations."cert-manager.io/cluster-issuer"
+          value: "letsencrypt-prod"
+        - name: expose.ingress.annotations."nginx.ingress.kubernetes.io/ssl-passthrough"
+          value: "true"
+        - name: expose.ingress.annotations."nginx.ingress.kubernetes.io/backend-protocol"
+          value: "HTTPS"
         - name: externalURL
           value: 'https://registry.bencoepp.de'
   destination:
