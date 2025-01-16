@@ -1,0 +1,37 @@
+﻿---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: harbor
+  namespace: argocd  # ArgoCD namespace, adjust as needed
+spec:
+  project: default
+  source:
+    repoURL: https://helm.goharbor.io
+    chart: harbor
+    targetRevision: 1.12.0 # Replace with the desired Harbor chart version
+    helm:
+      values: |
+        expose:
+          type: ingress
+          ingress:
+            hosts:
+              core: registry.bencoepp.de
+            annotations:
+              cert-manager.io/cluster-issuer: letsencrypt-prod
+                  nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+                  nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+            tls:
+              - secretName: harbor-tls # Replace with your TLS secret
+                hosts:
+                  - registry.bencoepp.de
+        harborAdminPassword: "your-secure-password" # Replace with a secure password
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: harbor
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
