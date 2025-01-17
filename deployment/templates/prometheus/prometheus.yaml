@@ -2,15 +2,23 @@
 kind: Application
 metadata:
   name: prometheus
-  namespace: argocd
 spec:
   destination:
     namespace: monitoring
     server: 'https://kubernetes.default.svc'
   source:
     repoURL: 'https://prometheus-community.github.io/helm-charts'
-    targetRevision: 9.3.2
-    chart: prometheus-operator
+    targetRevision: 26.1.0
+    chart: prometheus
+    helm:
+      parameters:
+        - name: alertmanager.persistence.size
+          value: 5Gi
+        - name: >-
+            prometheus-node-exporter.containerSecurityContext.allowPrivilegeEscalation
+          value: 'true'
+        - name: configmapReload.prometheus.startupProbe.enabled
+          value: 'true'
   project: default
   syncPolicy:
     automated:
