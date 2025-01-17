@@ -1,0 +1,11 @@
+﻿apiVersion: v1
+kind: Secret
+metadata:
+  name: rook-repository
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  url: https://github.com/rook/rook.git
+  name: rook
+  type: git
