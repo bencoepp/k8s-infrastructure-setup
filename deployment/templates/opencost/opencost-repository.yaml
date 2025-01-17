@@ -1,0 +1,11 @@
+﻿apiVersion: v1
+kind: Secret
+metadata:
+  name: opencost-repository
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  url: https://opencost.github.io/opencost-helm-chart
+  name: opencost
+  type: helm
