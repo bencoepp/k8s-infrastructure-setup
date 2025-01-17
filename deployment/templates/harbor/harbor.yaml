@@ -10,13 +10,27 @@ spec:
     chart: harbor
     targetRevision: 1.16.1
     helm:
-      parameters:
-        - name: expose.ingress.hosts.core
-          value: 'registry.bencoepp.de'
-        - name: expose.ingress.className
-          value: 'nginx'
-        - name: externalURL
-          value: 'https://registry.bencoepp.de'
+      values: |
+        expose:
+          type: ingress
+          ingress:
+            hosts:
+              core: registry.bencoepp.de
+            annotations:
+              kubernetes.io/ingress.class: nginx
+        persistence:
+          enabled: true
+          persistentVolumeClaim:
+            registry:
+              storageClass: standard
+              size: 10Gi
+        harborAdminPassword: "start#123"
+        database:
+          type: internal
+          internal:
+            password: "start#123"
+        redis:
+          type: internal
   destination:
     server: https://kubernetes.default.svc
     namespace: harbor
