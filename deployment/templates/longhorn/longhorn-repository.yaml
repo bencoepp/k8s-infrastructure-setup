@@ -1,0 +1,11 @@
+﻿apiVersion: v1
+kind: Secret
+metadata:
+  name: longhorn-repository
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  url: https://charts.longhorn.io
+  name: longhorn
+  type: helm
