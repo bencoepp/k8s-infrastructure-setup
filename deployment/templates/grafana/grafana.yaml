@@ -1,0 +1,22 @@
+﻿apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grafana
+  namespace: argocd
+spec:
+  destination:
+    namespace: monitoring
+    server: 'https://kubernetes.default.svc'
+  source:
+    repoURL: 'https://grafana.github.io/helm-charts'
+    targetRevision: 8.8.3
+    chart: grafana
+    helm:
+      parameters:
+        - name: autoscaling.enabled
+          value: 'true'
+  project: default
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true

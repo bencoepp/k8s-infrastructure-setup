@@ -1,7 +1,0 @@
-﻿apiVersion: v1
-data:
-  auth: YWRtaW46JGFwcjEkVUx1cDlxMmIkYTlMYnBNc2xzYnNNOVN5TWo3aS9YLgo=
-kind: Secret
-metadata:
-  name: basic-auth
-  namespace: longhorn
