@@ -2,17 +2,18 @@
 kind: Application
 metadata:
   name: prometheus
-  namespace: argocd
 spec:
   destination:
     namespace: monitoring
-    server: https://kubernetes.default.svc
-  project: default
+    server: 'https://kubernetes.default.svc'
   source:
-    chart: prometheus
-    repoURL: https://prometheus-community.github.io/helm-charts
-    targetRevision: 1.43.0
+    repoURL: 'https://prometheus-community.github.io/helm-charts'
+    targetRevision: 9.3.2
+    chart: prometheus-operator
+  project: default
   syncPolicy:
-    automated: {}
+    automated:
+      prune: false
+      selfHeal: false
     syncOptions:
       - CreateNamespace=true
